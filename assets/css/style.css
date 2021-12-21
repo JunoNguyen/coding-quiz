@@ -1,0 +1,47 @@
+:root {
+    --default: teal;
+    --wrong: red;
+    --right: green;
+}
+
+body {
+    width:auto;
+    height: auto;
+    background-color: var(--default);
+}
+
+nav {
+    background-color: #1d3131c9;
+    padding:25px;
+    font-size: 20px;
+    top:0;
+    display:row;
+    font-size: 30px;
+
+}
+
+nav p {
+    float:right;
+    display:inline;
+}
+
+#quizbox {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#quiz {
+    width: 800px;
+    height: 800px;
+    background-color:thistle;
+    border-radius:5px;
+}
+
+body.right {
+    var(--right);
+}
+
+body.wrong {
+    var(--wrong);
+}
