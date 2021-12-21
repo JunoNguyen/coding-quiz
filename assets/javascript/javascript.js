@@ -1,87 +1,86 @@
 var startButton = document.querySelector('#start');
-var questionsEl = document.querySelector('#questions');
-var questionEl = document.getElementById('question');
+
+var nextButton = document.querySelector('#next');
+
 var multiplechoiceEl = document.querySelector('#multiplechoice');
 
-var shuffleQuestions, currentQuestionsIndex;
+var questionEl = document.querySelector('#question');
 
-startButton.addEventListener('click', quizStart);
+var choicesEl = document.querySelector('.choices');
 
-function goNextQuestion() {
-    currentQuestionsIndex++;
-    
-    nextQuestion();
+var questionsEl = document.querySelector('#questions');
+
+let shuffledQuestions, currentQuestionIndex;
+
+startButton.addEventListener('click', startGame);
+
+nextButton.addEventListener('click', () => {
+  currentQuestionIndex++
+  setNextQuestion()
+});
+
+function startGame() {
+  startButton.classList.add('hidden');
+  shuffledQuestions = questions.sort(() => Math.random() - .5);
+  currentQuestionIndex = 0;
+  questionsEl.classList.remove('hidden');
+  setNextQuestion();
 };
 
-function quizStart() {
-    startButton.classList.add('hidden');
-
-    shuffleQuestions = questions.sort(() => Math.random() - .5);
-
-    currentQuestionsIndex = 0;
-
-    questionsEl.classList.remove('hidden');
-
-    nextQuestion();
-
-};
-
-function nextQuestion() {
-    resetAnswers();
-    showQuestion(shuffleQuestions[currentQuestionsIndex]);
+function setNextQuestion() {
+  resetState();
+  showQuestion(shuffledQuestions[currentQuestionIndex]);
 };
 
 function showQuestion(question) {
-    resetAnswers()
-    questionEl.innerText = question.question;
-    question.answers.forEach(answer => {
-        var button = document.createElement('button');
-        button.innerText = answer.text;
-        button.classList.add('choices');
-        if(answer.correct){
-            button.dataset.correct = answer.correct
-        };
-        button.addEventListener('click', selectAnswer);
-        questionsEl.appendChild(button);
-    })
-    
+  questionEl.innerText = question.question;
+  question.answers.forEach(answer => {
+    const button = document.createElement('button');
+    button.innerText = answer.text;
+    button.classList.add('choices');
+    if (answer.correct) {
+      button.dataset.correct = answer.correct
+    };
+    button.addEventListener('click', selectAnswer);
+    multiplechoiceEl.appendChild(button);
+  });
 };
 
-function resetAnswers() {
-    clearStatusClass(document.body);
-    while (multiplechoiceEl.firstChild) {
-        multiplechoiceEl.removeChild(multiplechoiceEl.firstChild);
-    }
+function resetState() {
+  clearStatusClass(document.body);
+  nextButton.classList.add('hidden');
+  while (multiplechoiceEl.firstChild) {
+    multiplechoiceEl.removeChild(multiplechoiceEl.firstChild);
+  };
 };
 
 function selectAnswer(e) {
-    var selectedAnswer = e.target;
-    var correct = selectedAnswer.dataset.correct;
-    setStatusClass(document.body, correct);
-    Array.from(multiplechoiceEl.children).forEach(button => {
-        setStatusClass(button, button.dataset.correct)
-    });
-    if(shuffleQuestions.length > currentQuestionsIndex + 1) {
-        goNextQuestion();
-    };
+  const selectedButton = e.target;
+  const correct = selectedButton.dataset.correct;
+  setStatusClass(document.body, correct);
+  Array.from(choicesEl.children).forEach(button => {
+    setStatusClass(button, button.dataset.correct);
+  })
+  if (shuffledQuestions.length > currentQuestionIndex + 1) {
+    nextButton.classList.remove('hidden');
+  } else {
+    startButton.innerText = 'Restart';
+    startButton.classList.remove('hidden');
+  };
 };
 
 function setStatusClass(element, correct) {
-    clearStatusClass(element)
-    if(correct) {
-        element.classList.add('correct');
-    } else {
-        element.classList.add('wrong');
-    };
+  clearStatusClass(element);
+  if (correct) {
+    element.classList.add('correct');
+  } else {
+    element.classList.add('wrong');
+  };
 };
 
 function clearStatusClass(element) {
-    element.classList.remove('correct');
-    element.classList.remove('wrong');
-};
-
-function viewHighscores() {
-
+  element.classList.remove('correct');
+  element.classList.remove('wrong');
 };
 
 var questions = [
