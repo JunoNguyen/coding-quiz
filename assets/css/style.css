@@ -2,6 +2,7 @@
     --default: teal;
     --wrong: red;
     --right: green;
+    --floating:0 0 10px 2px;
 }
 
 body {
@@ -25,7 +26,23 @@ nav p {
     display:inline;
 }
 
+.choices {
+    background-color: #7840e0;
+}
+
+.choices:hover {
+    box-shadow: var(--floating);
+}
+
+#multiplechoice {
+    display:grid;
+    grid-template-columns: repeat(2, auto);
+    gap: 10px;
+    margin: 20px 0 ;
+}
+
 #quizbox {
+    padding: 20px;
     display:flex;
     justify-content: center;
     align-items: center;
@@ -34,14 +51,20 @@ nav p {
 #quiz {
     width: 800px;
     height: 800px;
-    background-color:thistle;
+    background-color:#2041ad;
     border-radius:5px;
+    padding:20px;
+    box-shadow: var(--floating);
 }
 
 body.right {
-    var(--right);
+    background-color: var(--right);
 }
 
 body.wrong {
-    var(--wrong);
+   background-color: var(--wrong);
+}
+
+.hidden {
+    display:none;
 }
