@@ -28,9 +28,13 @@ nav p {
 
 .choices {
     background-color: #7840e0;
+    width:50px;
+    height: 50px;
+    padding: 10px;
+    margin: 10px;
 }
 
-.choices:hover {
+button:hover {
     box-shadow: var(--floating);
 }
 
@@ -57,7 +61,7 @@ nav p {
     box-shadow: var(--floating);
 }
 
-body.right {
+body.correct {
     background-color: var(--right);
 }
 
